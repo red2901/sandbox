@@ -19,12 +19,12 @@
 (set-background-color  "Black" )
 (set-face-foreground 'region "Green" )
 (set-face-background 'region "ForestGreen" )
-(set-face-foreground 'modeline "Green" )
-(set-face-background 'modeline "DarkGreen" ) 
+;; (set-face-foreground 'modeline "Green" )
+;; (set-face-background 'modeline "DarkGreen" ) 
 (set-background-color  "Black" )
 (set-cursor-color  "White" )
 
-(set-default-font "-Adobe-Courier-Medium-R-Normal--18-180-75-75-M-110-ISO8859-1")
+;; (set-default-font "-Adobe-Courier-Medium-R-Normal--18-180-75-75-M-110-ISO8859-1")
 
 ;;
 ;; spaces, not tabs ! 
@@ -41,31 +41,6 @@
 ;; emacs library path
 (add-to-list 'load-path "~/emacs-lisp/")
 
-;; nodejs
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-
-(require 'js-comint)
-(setq inferior-js-program-command "node --interactive")
-(setq inferior-js-mode-hook
-      (lambda ()
-        ;; We like nice colors
-        (ansi-color-for-comint-mode-on)
-        ;; Deal with some prompt nonsense
-        (add-to-list
-         'comint-preoutput-filter-functions
-         (lambda (output)
-           (replace-regexp-in-string "\033\\[[0-9]+[GK]" "" output)))))
-(add-hook 'js2-mode-hook '(lambda () 
-			    (local-set-key "\C-x\C-e" 'js-send-last-sexp)
-			    (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
-			    (local-set-key "\C-cb" 'js-send-buffer)
-			    (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
-			    (local-set-key "\C-cl" 'js-load-file-and-go)
-			    ))
-
-
 ;;
 ;; setting up some major modes
 ;;
@@ -77,7 +52,6 @@
 (setq auto-mode-alist (cons '("\.sp$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\.dml$" . sql-mode) auto-mode-alist)) 
 (setq auto-mode-alist (cons '("\.sql$" . sql-mode) auto-mode-alist))
-
 
 ;;
 ;; this is c-mode
@@ -94,7 +68,6 @@
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist
    (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
-
 
 ;;
 ;; this is python-mode
