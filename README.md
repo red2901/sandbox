@@ -1,3 +1,3 @@
 # sandbox
-A set of experimental code bitess.
+A set of experimental code bites.
 
