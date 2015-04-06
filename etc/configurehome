@@ -1,0 +1,19 @@
+#!/bin/sh
+# simple script which will configure my home environment
+
+ETCDIR=$CWD
+BASEDIR=`cd ..; echo $PWD`
+echo $BASEDIR
+
+# emacs config
+echo configuring emacs
+rm -f $HOME/.emacs
+ln -s $BASEDIR/emacs/.emacs $HOME/.emacs
+
+# bash
+echo configuring bash
+rm -f $HOME/.profile
+ln -s $BASEDIR/bash/.profile $HOME/.profile
+
+rm -f $HOME/.bashrc
+ln -s $BASEDIR/bash/.bashrc $HOME/.bashrc
