@@ -1,0 +1,4 @@
+this is meant to be a global git ignore file which can be set using
+
+git config --global core.excludesfile .gitignore
+

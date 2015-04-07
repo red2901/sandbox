@@ -1,0 +1,2 @@
+/home/kin/dev/src/sandbox/cmake/MathFunctions/CMakeFiles/MathFunctions.dir
+/home/kin/dev/src/sandbox/cmake/CMakeFiles/Tutorial.dir
