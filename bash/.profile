@@ -22,5 +22,6 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # set the latest go binaries
-export GOPATH=$HOME/dev/git/sandbox/golang
-export PATH=$PATH:$HOME/bin:$HOME:etc:/usr/local/go/bin:$GOPATH/bin
+export GOPATH=$HOME/dev/src/gows
+export GOROOT=/usr/local/go
+export PATH=$PATH:$HOME/bin:$HOME/etc:$GOROOT/bin:$GOPATH/bin

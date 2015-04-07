@@ -6,9 +6,17 @@ BASEDIR=`cd ..; echo $PWD`
 echo $BASEDIR
 
 # emacs config
-echo configuring emacs
+echo configuring emacs-lisp
+rm -f $HOME/emacs-lisp
+ln -s $BASEDIR/emacs-lisp $HOME/emacs-lisp
+
+echo configuring .emacs
 rm -f $HOME/.emacs
 ln -s $BASEDIR/emacs/.emacs $HOME/.emacs
+
+echo configuring .emacs.d
+rm -rf $HOME/.emacs.d
+ln -s $BASEDIR/emacs/.emacs.d $HOME/.emacs.d
 
 # bash
 echo configuring bash
