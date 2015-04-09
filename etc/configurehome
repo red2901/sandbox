@@ -3,7 +3,7 @@
 
 ETCDIR=$CWD
 BASEDIR=`cd ..; echo $PWD`
-SRCDIR=`cd ../../..; echo $PWD`
+SRCDIR=`cd ../..; echo $PWD`
 echo $BASEDIR
 
 # emacs config
@@ -31,8 +31,3 @@ ln -s $BASEDIR/bash/.bashrc $HOME/.bashrc
 echo configuring etc
 rm -f $HOME/etc
 ln -s $BASEDIR/etc $HOME/etc
-
-# source code repository
-echo configuring src repository
-rm -f $HOME/src
-ln -s $BASEDIR/src $SRCDIR/src

@@ -17,6 +17,16 @@
 ;; don't warn on symbolic links
 (setq vc-follow-symlinks nil)
 
+;; this is a problem in virtualbox I think where the times on the files are behind on the times on the disk - so I'm turning this off
+;;(defun ask-user-about-supersession-threat (fn)
+;;  "blatantly ignore files that changed on disk"
+;;  )
+;;(defun ask-user-about-lock (file opponent)
+;;  "always grab lock"
+;;   t)
+;;(global-auto-revert-mode t)
+;;
+
 ;; set the face
 (set-foreground-color  "White" ) 
 (set-background-color  "Black" )
@@ -52,6 +62,26 @@
 (setq auto-mode-alist (cons '("\.sp$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\.dml$" . sql-mode) auto-mode-alist)) 
 (setq auto-mode-alist (cons '("\.sql$" . sql-mode) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; web-mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/emacs-lisp/web-mode")
+(require 'web-mode) 
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)) 
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-enable-engine-detection t)
+(defun my-web-mode-hook () 
+  "Hooks for Web mode." 
+  (setq web-mode-markup-indent-offset 2) )
+(add-hook 'web-mode-hook 'my-web-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dos-mode
@@ -130,6 +160,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; this is python-mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/emacs-lisp/python-mode/python-mode.el-6.2.0") 
+(setq py-install-directory "~/emacs-lisp/python-mode/python-mode.el-6.2.0")
+(require 'python-mode)
 (setq auto-mode-alist (cons '("\.pyw$" . python-mode) auto-mode-alist)) 
 (setq auto-mode-alist (cons '("\.py$" . python-mode) auto-mode-alist))
 
@@ -199,7 +232,6 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yasnippet
@@ -216,3 +248,15 @@
 (add-to-list 'load-path "~/emacs-lisp/dockerfile-mode")
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((engine . ctemplate)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -97,7 +97,7 @@ alias s='subl'
 alias py='python'
 alias py2='python2.7'
 alias py3='python3.4'
-alias e='emacs -fw'
+alias e='emacs -fs'
 alias h='history'
 
 # Add an "alert" alias for long running commands.  Use like so:
