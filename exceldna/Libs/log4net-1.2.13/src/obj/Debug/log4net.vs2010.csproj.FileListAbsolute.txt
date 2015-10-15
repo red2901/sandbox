@@ -1,0 +1,5 @@
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\log4net-1.2.13\build\bin\net\2.0\debug\log4net.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\log4net-1.2.13\build\bin\net\2.0\debug\log4net.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\log4net-1.2.13\build\bin\net\2.0\debug\log4net.xml
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\log4net-1.2.13\src\obj\Debug\log4net.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\log4net-1.2.13\src\obj\Debug\log4net.pdb

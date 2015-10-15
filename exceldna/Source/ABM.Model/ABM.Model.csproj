@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC2EA188-015F-47D2-A199-894125E33F6E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ABM.Model</RootNamespace>
+    <AssemblyName>ABM.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ABM.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Client Profile|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug Client Profile\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug64|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug 64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\Libs\log4net-1.2.13\bin\net-cp\4.0\release\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Providers, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Runtime.Remoting, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Runtime.Remoting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Forms, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Reactive Extensions\v2.0\Binaries\.NETFramework\v4.0\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnchorYieldCurve.cs" />
+    <Compile Include="BidPrice.cs" />
+    <Compile Include="Bond.cs" />
+    <Compile Include="BondCollection.cs" />
+    <Compile Include="BondRegressionCoefficients.cs" />
+    <Compile Include="CashFlow.cs" />
+    <Compile Include="CashFlowStream.cs" />
+    <Compile Include="Commodity.cs" />
+    <Compile Include="CommodityFuture.cs" />
+    <Compile Include="CommodityFutureCollection.cs" />
+    <Compile Include="DiscountCurve.cs" />
+    <Compile Include="Events\AnchorDateEvent.cs" />
+    <Compile Include="Events\AskPriceEvent.cs" />
+    <Compile Include="Events\BidPriceEvent.cs" />
+    <Compile Include="Events\FittableObjectEvent.cs" />
+    <Compile Include="Events\EventType.cs" />
+    <Compile Include="Events\FittingParametersEvent.cs" />
+    <Compile Include="Events\PriceEvent.cs" />
+    <Compile Include="Events\FittingEvent.cs" />
+    <Compile Include="Events\SolverResultEvent.cs" />
+    <Compile Include="Events\YieldCurveEvent.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FittableObjectCollection.cs" />
+    <Compile Include="IBond.cs" />
+    <Compile Include="IBondCollection.cs" />
+    <Compile Include="IBondRegressionCoefficients.cs" />
+    <Compile Include="ICalculations.cs" />
+    <Compile Include="ICashFlowStream.cs" />
+    <Compile Include="IEventAggregatorHandler.cs" />
+    <Compile Include="IFittableObject.cs" />
+    <Compile Include="IFittableObjectCollection.cs" />
+    <Compile Include="IMergable.cs" />
+    <Compile Include="IPriceCollection.cs" />
+    <Compile Include="IRequestKey.cs" />
+    <Compile Include="IYieldCurve.cs" />
+    <Compile Include="PriceCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YieldCurve.cs" />
+    <Compile Include="YieldCurveType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ABM.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Numerics\Numerics.csproj">
+      <Project>{b7cae5f4-a23f-4438-b5be-41226618b695}</Project>
+      <Name>Numerics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABM.Analytics\ABM.Analytics.csproj">
+      <Project>{ae90d71b-8058-4ac2-b989-56bf50506017}</Project>
+      <Name>ABM.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ABM.Common\ABM.Common.csproj">
+      <Project>{4dbc3457-0a13-403e-b6b6-ed74fc06cc71}</Project>
+      <Name>ABM.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

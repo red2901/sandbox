@@ -1,0 +1,7 @@
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\bin\Debug\AppSoftware.LicenceEngine.KeyVerification.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\bin\Debug\AppSoftware.LicenceEngine.KeyVerification.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\bin\Debug\AppSoftware.LicenceEngine.Common.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\bin\Debug\AppSoftware.LicenceEngine.Common.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\obj\Debug\AppSoftware.LicenceEngine.KeyVerification.csprojResolveAssemblyReference.cache
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\obj\Debug\AppSoftware.LicenceEngine.KeyVerification.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.KeyVerification\obj\Debug\AppSoftware.LicenceEngine.KeyVerification.pdb

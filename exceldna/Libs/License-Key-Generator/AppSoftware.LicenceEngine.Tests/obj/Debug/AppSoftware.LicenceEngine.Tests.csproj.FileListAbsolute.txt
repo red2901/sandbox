@@ -1,0 +1,14 @@
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.Tests.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.Tests.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.Common.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.KeyGenerator.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.KeyVerification.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\nunit.framework.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\nunit.mocks.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.Common.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.KeyGenerator.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\AppSoftware.LicenceEngine.KeyVerification.pdb
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\bin\Debug\nunit.framework.xml
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\obj\Debug\AppSoftware.LicenceEngine.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\obj\Debug\AppSoftware.LicenceEngine.Tests.dll
+C:\Users\Kin\Documents\Work\Subversion\QMA\Libs\License-Key-Generator\AppSoftware.LicenceEngine.Tests\obj\Debug\AppSoftware.LicenceEngine.Tests.pdb

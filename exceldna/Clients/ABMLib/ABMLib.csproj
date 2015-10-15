@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6AED941-559E-472E-9E10-EDE7090953FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ABMLib</RootNamespace>
+    <AssemblyName>ABMLib</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug64|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug 64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExcelDna.Integration">
+      <HintPath>..\..\Libs\ExcelDna-0.32\Distribution\ExcelDna.Integration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\Libs\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\Libs\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\Libs\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ABMLibAddIn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ABMLibAddinSetup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExcelDna.xll" />
+    <None Include="ExcelDna64.xll" />
+    <None Include="ExcelDNAABMTestWorkbook.xlsm" />
+    <None Include="ABMLib.dna">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ABMLib64.dna">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Numerics\Numerics.csproj">
+      <Project>{b7cae5f4-a23f-4438-b5be-41226618b695}</Project>
+      <Name>Numerics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Analytics\ABM.Analytics.csproj">
+      <Project>{ae90d71b-8058-4ac2-b989-56bf50506017}</Project>
+      <Name>ABM.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Common.ExcelDna\ABM.Common.ExcelDna.csproj">
+      <Project>{b79cab8c-2e61-471a-a79c-c12e1e70fefb}</Project>
+      <Name>ABM.Common.ExcelDna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Common\ABM.Common.csproj">
+      <Project>{4dbc3457-0a13-403e-b6b6-ed74fc06cc71}</Project>
+      <Name>ABM.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Data.Services.Bloomberg\ABM.Data.Services.Bloomberg.csproj">
+      <Project>{bbd4d13a-1142-418c-b8f5-f2903763b87a}</Project>
+      <Name>ABM.Data.Services.Bloomberg</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Data.Services\ABM.Data.Services.csproj">
+      <Project>{8612136a-753a-4b0f-a796-0fae6984dc65}</Project>
+      <Name>ABM.Data.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Functions\ABM.Functions.csproj">
+      <Project>{d65c02d2-4028-423d-b1c2-1060e74e6f99}</Project>
+      <Name>ABM.Functions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\ABM.Model\ABM.Model.csproj">
+      <Project>{dc2ea188-015f-47d2-a199-894125e33f6e}</Project>
+      <Name>ABM.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(ProjectDir)\ExcelDna.xll $(TargetDir)ABMLib.xll
+ $(ProjectDir)ExcelDnaPack.exe $(TargetDir)\ABMLib.dna /Y
+copy  $(TargetDir)\ABMLib-packed.xll $(ProjectDir)Builds\$(ConfigurationName)\ABMLib.xll
+copy $(ProjectDir)\ExcelDna64.xll $(TargetDir)ABMLib64.xll
+ $(ProjectDir)ExcelDnaPack.exe $(TargetDir)\ABMLib64.dna /Y
+copy  $(TargetDir)\ABMLib64-packed.xll $(ProjectDir)Builds\$(ConfigurationName)\ABMLib64.xll
+copy   $(ProjectDir)ExcelDNAABMTestWorkbook.xlsm $(ProjectDir)Builds\$(ConfigurationName)\ExcelDNAABMTestWorkbook.xlsm
+
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,18 @@
+EXPORTS
+	xlAutoOpen				PRIVATE
+	xlAutoClose				PRIVATE
+;	xlAutoAdd				PRIVATE
+	xlAutoRemove			PRIVATE
+	xlAutoFree				PRIVATE
+	xlAutoFree12			PRIVATE
+	xlAddInManagerInfo		PRIVATE
+	xlAddInManagerInfo12	PRIVATE
+	SetExcel12EntryPt		PRIVATE
+	DllRegisterServer		PRIVATE
+	DllUnregisterServer		PRIVATE
+	DllGetClassObject		PRIVATE
+	DllCanUnloadNow			PRIVATE
+	SyncMacro			    PRIVATE
+	RegistrationInfo        PRIVATE
+	CalculationCanceled		PRIVATE
+	CalculationEnded		PRIVATE
