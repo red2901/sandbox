@@ -1,0 +1,1839 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bloomberglp.AppPortal.Netapi</name>
+    </assembly>
+    <members>
+        <member name="T:Bloomberglp.AppPortal.Netapi.BlpNetConfig">
+            <summary>
+            Configuration and tuning parameters for the Netapi
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.BlpNetException">
+            <summary>
+            Represents errors that occur during Netapi code execution.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.NamespaceDoc">
+            <summary>
+            This namespace provides Single Sign On (SSO) functionality.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn">
+            <summary>
+            Implements <see cref="T:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn"/> interface 
+            </summary>
+            <remarks>
+            BlpSingleSignOn class can be used by AppPortal application to obtain authentication token.
+            SSO mechanism implemented as following:
+            1. Application create instance of BlpSingleSignOn class and use BeginSignOn() or SignOn() methods to send
+            SAML 2.0 Authentication response message to service provider's Assertion Consumer Service (ACS)
+            2. ACS validates SAML 2.0 assertion and all user identity related claims presented by assertion
+            3. ACS sends HTTP 302 message to client with authentication token as a SetCookie header, where cookie name match
+            cookieName of BlpSingleSignOn(string cookieName) constructor 
+            4. Application uses ISignOnResult to obtain authentication token and service uri 
+            </remarks>
+            <example>
+            The following example demonstrates asynchronous use of <b>IBlpSingleSignOn</b> sign on method.
+            <code>
+            var serviceUri = new Uri("https://companyname.com/AssertionConsumerService.aspx");
+            var blpSso = new BlpSingleSignOn("saml2sp");
+            
+            blpSso.BeginSignOn(serviceUri, (ar) =&gt;
+            {
+                var res = blpSso.EndSignOn(ar);
+                // res.AuthenticationToken - is a token from Assertion Consumer Service
+            	// use this token to pass it to service for authentication: var res = service1.getData(res.AuthenticationToken, parameter1);
+            }, this);            
+            </code>
+            </example>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn">
+            <summary>
+            Defines synchronous and asynchronous single sign on operations
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn.SignOn(System.Uri)">
+            <summary>
+            Perform Single Sign On operation  
+            </summary>
+            <param name="assertionConsumingService">Assertion consumer service location</param>
+            <returns><see cref="T:Bloomberglp.AppPortal.Netapi.ISignOnResult"/> containing authentication token and service Uri</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn.BeginSignOn(System.Uri,System.AsyncCallback,System.Object)">
+            <summary>
+            Begin an asynchronous Single Sign On operation
+            </summary>
+            <param name="assertionConsumingService">Assertion Consumer Service URL</param>
+            <param name="callback">The <see cref="T:System.AsyncCallback"/> delegate that receives notification of the completion of the asynchronous open operation.</param>
+            <param name="asynState">An object, specified by the application, that contains state information associated 
+            with the asynchronous Sign On operation.</param>
+            <returns>The <see cref="T:System.IAsyncResult"/> that references the asynchronous open operation. </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn.EndSignOn(System.IAsyncResult)">
+            <summary>
+            Completes an asynchronous Sign On operation.
+            </summary>
+            <param name="asyncResult">The <see cref="T:Bloomberglp.AppPortal.Netapi.ISignOnResult"/> that is returned by a call to the BeginSignOn method.</param>
+            <returns><see cref="T:Bloomberglp.AppPortal.Netapi.ISignOnResult"/> containing authentication token and service Uri</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn.#ctor(System.String,System.Net.Security.RemoteCertificateValidationCallback,System.Boolean)">
+            <summary>
+            Creates an instance of <see cref="T:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn"/> class.
+            </summary>
+            <param name="cookieName">The name of HTTP cookie used to return an authentication token value.</param>
+            <param name="certificateVlaidationCallback">Verifies the remote Secure Sockets Layer (SSL) 
+            certificate used for server authentication. 
+            </param>
+            <param name="usePartialCookieMatch">When is true, and cookie is not found, "cookie name" parameter is used as prefix to attempt match a cookie again. </param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="cookieName"/> is null or empty.</exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn.SignOn(System.Uri)">
+             <summary>
+             Performs Single Sign On operation  
+             </summary>
+             <param name="assertionConsumingService">Assertion consumer service location</param>
+             <exception cref="T:System.ArgumentException">Thrown if <paramref name="assertionConsumingService"/> is null or not well formed 
+             or does not use HTTPS protocol.</exception>
+             <exception cref="T:Bloomberglp.AppPortal.Netapi.BlpSsoException">Indicates abnormal situation during single sign on procedure.</exception>
+             <exception cref="T:Bloomberglp.AppPortal.Netapi.BlpNetException">Internal Netapi exception.</exception>
+             <returns><see cref="T:Bloomberglp.AppPortal.Netapi.ISignOnResult"/> containing authentication token and service Uri</returns>
+             <example>
+             The following example demonstrates synchronous use of <b>IBlpSingleSignOn</b> sign on method.
+             <code>
+            	var serviceUri = new Uri("https://companyname.com/AssertionConsumerService.aspx");
+            	var blpSso = new BlpSingleSignOn("saml2sp");
+            
+            	var res = blpSso.SignOn(serviceUri);
+             // res.AuthenticationToken - is a token from Assertion Consumer Service
+            	// use this token to pass it to service for authentication: var res = service1.getData(res.AuthenticationToken, parameter1);
+             </code>
+             </example>        
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn.BeginSignOn(System.Uri,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins an asynchronous Single Sign On operation
+            </summary>
+            <param name="assertionConsumingService">Assertion Consumer Service URL</param>
+            <param name="callback">The <see cref="T:System.AsyncCallback"/> delegate that receives notification of the completion of the asynchronous open operation.</param>
+            <param name="asynState">An object, specified by the application, that contains state information associated 
+            with the asynchronous Sign On operation.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="assertionConsumingService"/> is null or not well formed 
+            or does not use HTTPS protocol.</exception>
+            <exception cref="T:Bloomberglp.AppPortal.Netapi.BlpSsoException">Indicates abnormal situation during single sign on procedure.</exception>
+            <exception cref="T:Bloomberglp.AppPortal.Netapi.BlpNetException">Generic Netapi exception.</exception>
+            <returns>The <see cref="T:System.IAsyncResult"/> that references the asynchronous open operation. </returns>
+            <example>
+            The following example demonstrates asynchronous use of <b>IBlpSingleSignOn</b> sign on method.
+            <code>
+            var serviceUri = new Uri("https://companyname.com/AssertionConsumerService.aspx");
+            var blpSso = new BlpSingleSignOn("saml2sp");
+            
+            blpSso.BeginSignOn(serviceUri, (ar) =&gt;
+            {
+                var res = blpSso.EndSignOn(ar);
+                // res.AuthenticationToken - is a token from Assertion Consumer Service
+            	// use this token to pass it to service for authentication: var res = service1.getData(res.AuthenticationToken, parameter1);
+            }, this);            
+            </code>
+            </example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn.EndSignOn(System.IAsyncResult)">
+            <summary>
+            Completes an asynchronous Single Sign On operation.
+            </summary>
+            <param name="asyncResult">The <see cref="T:System.IAsyncResult"/> that is returned by a call to the BeginSignOn method.</param>
+            <returns><see cref="T:Bloomberglp.AppPortal.Netapi.ISignOnResult"/> containing authentication token and service Uri</returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSingleSignOn.TraceLevel">
+            <summary>
+            Trace level for Single Sign On operations.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Util.AsyncResult`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Util.AsyncResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult.#ctor(System.AsyncCallback,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="asyncCallback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult.SetAsCompleted(System.Exception,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="exception"></param>
+            <param name="completedSynchronously"></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult.EndInvoke">
+            <summary>
+            
+            </summary>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Util.IAsyncResult`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.IAsyncResult`1.EndInvoke">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult`1.#ctor(System.AsyncCallback,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="asyncCallback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult`1.SetAsCompleted(`0,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="result"></param>
+            <param name="completedSynchronously"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Util.AsyncResult`1.EndInvoke">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl">
+            <summary>
+            Used to establish a connection between an Application Portal application and vendor's backend service/resource
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.IBlpSslTunnel">
+            <summary>
+            Defines synchronous and asynchronous tunnel operations
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSslTunnel.EstablishSslTunnel(System.Uri)">
+            <summary>
+            Establish SSL tunnel.
+            </summary>
+            <param name="service">Location of service or resource.</param>
+            <returns><see cref="T:System.IO.Stream"/> to send/receive data from tunnel.</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSslTunnel.BeginEstablishSslTunnel(System.Uri,System.AsyncCallback,System.Object)">
+            <summary>
+            Begin asynchronous operation to establish SSL tunnel.
+            </summary>
+            <param name="service">Location of service or resource.</param>
+            <param name="callback">Callback to execute when tunnel is established.</param>
+            <param name="asynState">State that passed to callback delegate as a parameter.</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSslTunnel.EndEstablishSslTunnel(System.IAsyncResult)">
+            <summary>
+            End asynchronous operation to establish SSL tunnel.
+            </summary>
+            <param name="asyncResult">Asynchronous call context data</param>
+            <returns><see cref="T:System.IO.Stream"/> to send/receive data from tunnel.</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.#ctor(System.Net.Security.RemoteCertificateValidationCallback)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="certificateVlaidationCallback"> 
+            Verifies the remote Secure Sockets Layer (SSL) certificate used for authentication.
+            </param>
+            <remarks>
+            The delegate's <i>sslPolicyErrors</i> argument contains any certificate errors returned by SSPI while 
+            authenticating the client or server. The Boolean value returned by the method invoked by this 
+            delegate determines whether the authentication is allowed to succeed.
+            </remarks>
+            <example>
+            The following code example implements a method that is invoked by an instance of the 
+            <b>RemoteCertificateValidationCallback</b> class. If there are validation errors, 
+            this method displays them and returns <b>false</b>, which prevents 
+            communication with the unauthenticated server.
+            <code>
+            // The following method is invoked by the RemoteCertificateValidationDelegate.
+            public static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+               if (sslPolicyErrors == SslPolicyErrors.None)
+                    return true;
+            
+                Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
+            
+                // Do not allow this client to communicate with unauthenticated servers.
+                return false;
+            }        
+            </code>
+            </example>        
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.EstablishSslTunnel(System.Uri)">
+            <summary>
+            Establish SSL tunnel.
+            </summary>
+            <param name="service">Location of service or resource.</param>
+            <returns><see cref="T:System.IO.Stream"/> to send/receive data from tunnel.</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.BeginEstablishSslTunnel(System.Uri,System.AsyncCallback,System.Object)">
+            <summary>
+            Begin asynchronous operation to establish SSL tunnel.
+            </summary>
+            <param name="service">Location of service or resource.</param>
+            <param name="callback">Callback to execute when tunnel is established.</param>
+            <param name="asynState">State that passed to callback delegate as a parameter.</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.EndEstablishSslTunnel(System.IAsyncResult)">
+            <summary>
+            End asynchronous operation to establish SSL tunnel.
+            </summary>
+            <param name="asyncResult">Asynchronous call context data</param>
+            <returns><see cref="T:System.IO.Stream"/> to send/receive data from tunnel.</returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.SendTimout">
+            <summary>
+            Gets or sets the amount of time a <see cref="T:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl"/> will wait for a send operation to complete successfully.
+            </summary>
+            <value>
+            The send time-out value, in milliseconds. The default is 0.
+            </value>
+            <remarks>
+            <para> <b>SendTimeout</b> property determines the amount of time that the Send method will block until it is 
+            able to return successfully. This time is measured in milliseconds.</para>
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.ReceiveTimout">
+            <summary>
+            Gets or sets the amount of time a TcpClient will wait to receive data once a read operation is initiated.
+            </summary>
+            <value>
+            The time-out value of the connection in milliseconds. The default value is 0.
+            </value>
+            <remarks>
+            The <b>ReceiveTimeout</b> property determines the amount of time that the Read 
+            method will block until it is able to receive data. This time is measured in milliseconds. 
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.ReceiveBufferSize">
+            <summary>
+            Gets or sets the size of the receive buffer.
+            </summary>
+            <value>
+            The size of the receive buffer, in bytes. The default value is 8192 bytes.
+            </value>
+            <remarks>
+            <para>The <b>ReceiveBufferSize</b> property gets or sets the number of bytes that you are expecting to store in 
+            the receive buffer for each read operation. This property actually manipulates the network buffer 
+            space allocated for receiving incoming data.</para>
+            <para>
+            If the network buffer is smaller than the amount of data you request in the Read method, you will not be able to 
+            retrieve the desired amount of data in one read operation. This incurs the overhead of additional calls to the Read method.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.SendBufferSize">
+            <summary>
+            Gets or sets the size of the send buffer.
+            </summary>
+            <value>
+            The size of the send buffer, in bytes. The default value is 8192 bytes.
+            </value>
+            <remarks>
+            If the network buffer is smaller than the amount of data you provide the Write method, several 
+            network send operations will be performed for every call you make to the Write method. You can 
+            achieve greater data throughput by ensuring that your network buffer is at least as large as your application buffer.
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.CertificateVlaidationCallback">
+            <summary>
+            Verifies the remote Secure Sockets Layer (SSL) certificate used for authentication.
+            </summary>
+            <remarks>
+            The delegate's <i>sslPolicyErrors</i> argument contains any certificate errors returned by SSPI while 
+            authenticating the client or server. The Boolean value returned by the method invoked by this 
+            delegate determines whether the authentication is allowed to succeed.
+            </remarks>
+            <example>
+            The following code example implements a method that is invoked by an instance of the 
+            <b>RemoteCertificateValidationCallback</b> class. If there are validation errors, 
+            this method displays them and returns <b>false</b>, which prevents 
+            communication with the unauthenticated server.
+            <code>
+            // The following method is invoked by the RemoteCertificateValidationDelegate.
+            public static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+               if (sslPolicyErrors == SslPolicyErrors.None)
+                    return true;
+            
+                Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
+            
+                // Do not allow this client to communicate with unauthenticated servers.
+                return false;
+            }        
+            </code>
+            </example>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.BlpSslTunnelImpl.TraceLevel">
+            <summary>
+            Trace level for Tunnel operations.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.BlpSsoException">
+            <summary>
+            Represents errors that occur during single sign on process.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSsoException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.BlpSsoException"/>class with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error. </param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.BlpSsoException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.BlpSsoException"/> class with a specified error message and a reference 
+            to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current 
+            exception, or a null reference if no inner exception is specified. </param>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker.#ctor(Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker"/> class.
+            </summary>
+            <param name="handler">The handler.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker.#ctor(Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker"/> class.
+            </summary>
+            <param name="handler">The handler.</param>
+            <param name="disposeHandler">if set to <c>true</c> [dispose handler].</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker.Send(Bloomberglp.AppPortal.Netapi.Http.Client.HttpRequestMessage)">
+            <summary>
+            Sends the specified request.
+            </summary>
+            <param name="request">The request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient.#ctor(Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker"/> class.
+            </summary>
+            <param name="handler">The handler.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient.#ctor(Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageInvoker"/> class.
+            </summary>
+            <param name="handler">The handler.</param>
+            <param name="disposeHandler">if set to <c>true</c> [dispose handler].</param>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient.BaseAddress">
+            <summary>
+            Gets or sets the base address.
+            </summary>
+            <value>
+            The base address.
+            </value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClient.DefaultRequestHeaders">
+            <summary>
+            Gets the default request headers.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpClientHandler">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler">
+            <summary>
+            A base type for HTTP message handlers.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler"/> class.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpMessageHandler.Send(Bloomberglp.AppPortal.Netapi.Http.Client.HttpRequestMessage)">
+            <summary>
+            Sends the specified request.
+            </summary>
+            <param name="request">The request.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent">
+            <summary>
+            A base class representing an HTTP entity body and content headers.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.#ctor(Bloomberglp.AppPortal.Netapi.Http.Headers.HttpContentHeaders)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent"/> class.
+            </summary>
+            <param name="headers">The headers.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.LoadIntoBuffer">
+            <summary>
+            Serialize the HTTP content to a memory buffer 
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.CreateContentReadStream">
+            <summary>
+            Write the HTTP content to a memory stream.
+            </summary>
+            <returns>HTTP content stream</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.ReadAsStream">
+            <summary>
+            Write the HTTP content to a stream 
+            </summary>
+            <returns>Content as stream</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.ReadAsByteArray">
+            <summary>
+            Write the HTTP content to a byte array
+            </summary>
+            <returns>Content as byte array</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.ReadAsString">
+            <summary>
+            Write the HTTP content to a string
+            </summary>
+            <returns>Content as string</returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.SerializeToStream(System.IO.Stream)">
+            <summary>
+            Serializes to stream.
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed 
+            and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, 
+            releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Client.HttpContent.Headers">
+            <summary>
+            HTTP headers.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.Add(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="values"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.Add(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.Clear">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.Contains(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.GetValues(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.Remove(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.TryAddWithoutValidation(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="values"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.TryAddWithoutValidation(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpHeaders.TryGetValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="method"></param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Equals(Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the other parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+            <exception cref="T:System.NullReferenceException">
+            The <paramref name="obj"/> parameter is null.
+              </exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.op_Equality(Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod,Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod)">
+            <summary>
+            Implements the operator ==.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>
+            The result of the operator.
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.op_Inequality(Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod,Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod)">
+            <summary>
+            Implements the operator !=.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>
+            The result of the operator.
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Delete">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Get">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Head">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Options">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Post">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Put">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpMethod.Trace">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.HttpRequestHeaders">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueHeaderValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue.Parse(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue.TryParse(System.String,Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue@)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <param name="parsedValue"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.NameValueWithParametersHeaderValue.Parameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue.Parse(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue.TryParse(System.String,Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue@)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <param name="parsedValue"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue.Parameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingHeaderValue.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue.#ctor(System.String,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="quality"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue.Parse(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue.TryParse(System.String,Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue@)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <param name="parsedValue"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.Headers.Values.TransferCodingWithQualityHeaderValue.Quality">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.NamespaceDoc">
+            <summary>
+            <para>The <b>Bloomberglp.AppPortal.Netapi.Http</b> namespace provides a programming 
+            interface for REST (HTTP) applications.</para>
+            <para>The <b>System.Net.Http namespace</b> is designed to provide HTTP client 
+            components that allow users to consume modern web services over HTTP</para>
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.HttpClient">
+            <summary>
+            Provides a class for sending HTTP requests and receiving HTTP responses from a resource identified by a URI. 
+            </summary>
+            <example>
+            <para>This class provides illustrative functionality to manipulate
+            data using <see cref="T:Bloomberglp.AppPortal.Netapi.Http.HttpClient"/> and REST protocol</para>
+            <para>The sample uses open source Json.NET library for serialization.
+            Json.NET is used for demonstration purposes only and not part of the API.</para>
+            <code>
+            using System;
+            using System.Collections.Generic;
+            using System.Globalization;
+            using System.IO;
+            using System.Linq;
+            using System.Net;
+            using Bloomberglp.AppPortal.Netapi.Http;
+            using Newtonsoft.Json;
+            
+            namespace Bloomberglp.AppPortal.Netapi.Test.HttpClientTests
+            {
+                [TestFixture]
+                static class HttpClientSyncTest
+                {
+                    class TestResult
+                    {
+                        public TestResult(Product product, Uri uri)
+                        {
+                            Uri = uri;
+                            Product = product;
+                        }
+                        public readonly Product Product;
+                        public readonly Uri Uri;
+                    }
+            
+                    public static void CRUDProductTest()
+                    {
+                        var client = new HttpClient();
+                        var product = new Product { Category = "c1", Name = "n1", Price = 2 };
+            
+                        var resCreate = CreateProduct(client, HttpClientTestParam.RestUri, product);
+                        var resGet = GetProduct(client, resCreate.Uri);
+                        Assert.AreEqual(resCreate.Product,resGet);
+            
+                        resCreate.Product.Category = "aaa2";
+                        UpdateProduct(client, resCreate.Uri, resCreate.Product);
+                        resGet = GetProduct(client, resCreate.Uri);
+                        Assert.AreEqual(resCreate.Product, resGet);
+            
+                        Assert.IsTrue(CheckProduct(client, resCreate.Uri));
+                        DeleteProduct(client, resCreate.Uri);
+                        Assert.IsFalse(CheckProduct(client, resCreate.Uri));
+            
+                        for (var i = 0; i &lt; 10; i++)
+                            CreateProduct(client, HttpClientTestParam.RestUri, product);
+                        var allProducts = GetAllProducts(client, HttpClientTestParam.RestUri);
+                        Assert.IsTrue(allProducts.Count() &gt;= 10);
+                    }
+            
+                    private static TestResult CreateProduct(HttpClient client, Uri location, Product product)
+                    {
+                        var requestContent = JsonConvert.SerializeObject(product);
+            
+                        var request = new HttpRequestMessage("POST", location);
+                        var mStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(requestContent));
+                        request.Content = mStream;
+                        request.AddHeader("Content-Length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
+                        request.AddHeader("Content-Type", "application/json; charset=utf-8");
+                        request.AddHeader("Accept", "application/json");
+                        
+                        var response = client.Send(request);
+                        var contentReader = new StreamReader(response.Content);
+                        var responseContent = contentReader.ReadToEnd();
+                        var location2 = response.Headers.SingleOrDefault(x =&gt; x.Key == "Location").Value.SingleOrDefault();
+            
+                        var createdProduct = JsonConvert.DeserializeObject&lt;Product&gt;(responseContent);
+            
+                        Assert.IsNotNullOrEmpty(responseContent);
+                        Assert.IsNotNull(location2);
+                        Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            
+                        return new TestResult(createdProduct, new Uri(location2));
+                    }
+            
+                    private static Product GetProduct(HttpClient client, Uri location)
+                    {
+                        var request = new HttpRequestMessage("GET", location);
+                        request.AddHeader("Accept", "application/json");
+            
+                        var response = client.Send(request);
+                        var contentReader = new StreamReader(response.Content);
+                        var responseContent = contentReader.ReadToEnd();
+            
+                        var product = JsonConvert.DeserializeObject&lt;Product&gt;(responseContent);
+            
+                        Assert.IsNotNullOrEmpty(responseContent);
+                        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            
+                        return product;
+                    }
+            
+                    private static IEnumerable&lt;Product&gt; GetAllProducts(HttpClient client, Uri location)
+                    {
+                        var request = new HttpRequestMessage("GET", location);
+                        request.AddHeader("Accept", "application/json");
+            
+                        var response = client.Send(request);
+                        var contentReader = new StreamReader(response.Content);
+                        var responseContent = contentReader.ReadToEnd();
+            
+                        var products = JsonConvert.DeserializeObject&lt;IEnumerable&lt;Product&gt;&gt;(responseContent);
+            
+                        Assert.IsNotNullOrEmpty(responseContent);
+                        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            
+                        return products;
+                    }
+            
+                    private static void UpdateProduct(HttpClient client, Uri location, Product product)
+                    {
+                        var requestContent = JsonConvert.SerializeObject(product);
+            
+                        var request = new HttpRequestMessage("PUT", location);
+                        var mStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(requestContent));
+                        request.Content = mStream;
+                        request.AddHeader("Content-Length", requestContent.Length.ToString(CultureInfo.InvariantCulture));
+                        request.AddHeader("Content-Type", "application/json; charset=utf-8");
+                        request.AddHeader("Accept", "application/json");
+                        var response = client.Send(request);
+                        Assert.IsTrue(HttpStatusCode.OK == response.StatusCode || HttpStatusCode.NoContent == response.StatusCode);
+                    }
+            
+                    private static void DeleteProduct(HttpClient client, Uri location)
+                    {
+                        var request = new HttpRequestMessage("DELETE", location);
+                        var response = client.Send(request);
+                        Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+                    }
+            
+                    private static bool CheckProduct(HttpClient client, Uri location)
+                    {
+                        Assert.IsNotNull(client);
+                        Assert.IsNotNull(location);
+                        Assert.IsNotNullOrEmpty(location.OriginalString);
+                        var request = new HttpRequestMessage("HEAD", location);
+                        try
+                        {
+                            var response = client.Send(request);
+                            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                            return true;
+                        }
+                        catch (WebException ex)
+                        {
+                            if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
+                                return false;
+                            throw;
+                        }
+                    }
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bloomberglp.AppPortal.Netapi.Http.HttpClient"/> class.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.Send(Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage)">
+            <summary>
+            Sends an HTTP request.
+            </summary>
+            <param name="request">The HTTP request message to send.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="request"/> is <b>null</b>.</exception>
+            <returns>An HTTP response message</returns>
+            <example>See example <see cref="T:Bloomberglp.AppPortal.Netapi.Http.HttpClient">here</see></example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.BeginSend(Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage,System.AsyncCallback,System.Object)">
+            <summary>
+            Send an HTTP request asynchronously.
+            </summary>
+            <param name="request">The HTTP request message to send.</param>
+            <param name="callback">An optimal references a method to be called when a 
+            corresponding asynchronous operation completes.</param>
+            <param name="asynState">An optional  user-provided object that distinguishes this 
+            particular asynchronous write request from other requests. </param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="request"/> is <b>null</b>.</exception>
+            <returns>An <b>IAsyncResult</b> that represents the asynchronous send, which could still be pending.</returns>
+            <example>
+            Read HTTP content asynchronously.
+            <code>
+            var client = new HttpClient();
+            var request = new HttpRequestMessage("GET", restUri);
+            
+            var ar = client.BeginSend(request, (x) =&gt;
+            	{
+            		var response = client.EndSend(x);
+            
+            		var contentReader = new StreamReader(response.Content);
+            		var responseContent = contentReader.ReadToEnd();
+            		Console.WriteLine(responseContent);
+            	}, null);         
+            </code>
+            </example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.EndSend(System.IAsyncResult)">
+            <summary>
+            Ends an asynchronous send operation.
+            </summary>
+            <param name="asyncResult">A reference to the outstanding asynchronous I/O request.</param>
+            <returns>HTTP response. headers and body.</returns>
+            <remarks>
+            <b>EndSend</b> must be called exactly once on every <see cref="T:System.IAsyncResult"/>IAsyncResult from <see cref="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.BeginSend(Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage,System.AsyncCallback,System.Object)"/>. 
+            This method blocks until the I/O operation has completed. Errors that occur during an asynchronous send request, 
+            such as a communication failure during the I/O request, occur on the thread pool thread 
+            and become visible upon a call to <b>EndSend</b>. 
+            </remarks>
+            <example>
+            Read HTTP content asynchronously.
+            <code>
+            var client = new HttpClient();
+            var request = new HttpRequestMessage("GET", restUri);
+            
+            var ar = client.BeginSend(request, (x) =&gt;
+            	{
+            		var response = client.EndSend(x);
+            
+            		var contentReader = new StreamReader(response.Content);
+            		var responseContent = contentReader.ReadToEnd();
+            		Console.WriteLine(responseContent);
+            	}, null);         
+            </code>
+            </example>         
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpClient.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage">
+            <summary>
+            Represents a HTTP request message.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.#ctor">
+            <summary>
+            Initializes a new instance of the <b>HttpRequestMessage class.</b>
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <b>HttpRequestMessage</b> class with an 
+            HTTP method and a request (as string).
+            </summary>
+            <param name="httpMethod">An HTP method (GET, POST, etc.).</param>
+            <param name="requestUri">An absolute HTTP Uri.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when ether of input parameters is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="httpMethod"/> is not known to the API.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="requestUri"/> is not an absolute HTTP Uri.</exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <b>HttpRequestMessage</b> class with an 
+            HTTP method and a request <see cref="T:System.Uri"/>.
+            </summary>
+            <param name="httpMethod">An HTP method (GET, POST, etc.).</param>
+            <param name="requestUri">An absolute HTTP Uri.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when ether of input parameters is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="httpMethod"/> is not known to the API.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="requestUri"/> is not an absolute HTTP Uri.</exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.AddHeader(System.String,System.String)">
+            <summary>
+            Adds an HTTP request header.
+            </summary>
+            <param name="name">Header name.</param>
+            <param name="value">Header value.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.AddHeader(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds an HTTP request header.
+            </summary>
+            <param name="name">Header name.</param>
+            <param name="values">Header values.</param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Removeheader(System.String)">
+            <summary>
+            Removes an HTTP request header.
+            </summary>
+            <param name="name">Header name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or 
+            resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Method">
+            <summary>
+            Gets or sets the HTTP method used by the HTTP request message.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.RequestUri">
+            <summary>
+            Gets or sets the Uri used for the HTTP request.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Version">
+            <summary>
+            Gets or sets the HTTP message version.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Content">
+            <summary>
+            Gets or sets the contents of the HTTP message. 
+            </summary>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpRequestMessage.Headers">
+            <summary>
+            Gets the collection of HTTP request headers.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage">
+            <summary>
+            Represents a HTTP response message.
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.Content">
+            <summary>
+            Gets or sets the content of a HTTP response message. 
+            </summary>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.Headers">
+            <summary>
+            Gets the collection of HTTP response headers. 
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.IsSuccessStatusCode">
+            <summary>
+            Gets a value that indicates if the HTTP response was successful.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.ReasonPhrase">
+            <summary>
+            Gets or sets the reason phrase which typically is sent by servers together with the status code. 
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.RequestMessage">
+            <summary>
+            Gets or sets the request message which led to this response message.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Http.HttpResponseMessage.StatusCode">
+            <summary>
+            Gets or sets the status code of the HTTP response.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.ISignOnResultEx`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResource"></typeparam>
+            <typeparam name="TToken"></typeparam>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.ISignOnResultEx`2.AuthenticationToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.ISignOnResultEx`2.ServiceUri">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.ISignOnResultEx`2.SecureTunnel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.ISignOnResult">
+            <summary>
+            Single sign on information.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.ISignOnResult.AuthenticationToken">
+            <summary>
+            Authentication token returned as SetCookie header of HTTP 302 message.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.ISignOnResult.ServiceUri">
+            <summary>
+            Service URI returned as location header of HTTP 302 message.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOnEx`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResource"></typeparam>
+            <typeparam name="TToken"></typeparam>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOnEx`2.SignOn(`0)">
+            <summary>
+            
+            </summary>
+            <param name="assertionConsumingService"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOnEx`2.BeginSignOn(`0,System.AsyncCallback,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="assertionConsumingService"></param>
+            <param name="callback"></param>
+            <param name="asynState"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOnEx`2.EndSignOn(System.IAsyncResult)">
+            <summary>
+            
+            </summary>
+            <param name="asyncResult"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory">
+            <summary>
+            Factory for creating and configuring Single Sign On clients 
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.#ctor(System.String,System.Boolean,System.Net.Security.RemoteCertificateValidationCallback)">
+            <summary>
+            Default constructor. Initializes all public properties with default values.
+            </summary>
+            <param name="cookieName">Cookie name used to set token value.</param>
+            <param name="usePartialCookieMatch"> </param>
+            <param name="certificateVlaidationCallback"> </param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.CreateClient">
+            <summary>
+            Builds and returns implementation of <see cref="T:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn"/> interface
+            </summary>
+            <returns>
+            An instance that implements <see cref="T:Bloomberglp.AppPortal.Netapi.IBlpSingleSignOn"/> interface
+            </returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.SsoTopologyType">
+            <summary>
+            Single sign on topology type
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.AssertionConsumerProtocol">
+            <summary>
+            Assertion consumer service protocol
+            </summary>
+            <remarks>
+            Defines protocol to use when submitting IDP token to a vendor's assertion consumer service
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.StsTokenType">
+            <summary>
+            Token format: IdP POST Response. As defined in SAML 2.0 Web Browser SSO Profile
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.CookieName">
+            <summary>
+            Secure token service token type
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.KeyLength">
+            <summary>
+            Length of array of random bits used for Holder of Key 
+            subject confirmation method by IDP
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.StsTokenTypes">
+            <summary>
+            Secure token service token type
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.StsTokenTypes.Saml20Response">
+            <summary>
+            Token format: IdP POST Response. As defined in SAML 2.0 Web Browser SSO Profile
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.StsTokenTypes.Saml20Assertion">
+            <summary>
+            Token format: SAML 2.0 Assertion.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.AssertionConsumerProtocols">
+            <summary>
+            Assertion consumer service protocol
+            </summary>
+            <remarks>
+            Defines protocol to use when submitting a SAML token to a vendor's assertion consumer service
+            </remarks>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.AssertionConsumerProtocols.HttpRedirectWithCookieToken">
+            <summary>
+            Assertion consumer service response is HTTP redirect with binary security token in a cookie, 
+            as defined in SAML 2.0 Web Browser SSO Profile.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.SsoTopologyTypes">
+            <summary>
+            Single sign on topology type
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.SsoTopologyTypes.IdpAndSp">
+            <summary>
+            Get a SAML token from Bloomberg's IDP service, submit it to vendor's 
+            assertion consumer service, return authorization token generated by vendor's service            
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Sso.BlpSingleSignOnFactory.SsoTopologyTypes.IdpOnly">
+            <summary>
+            Return a token from Bloomberg's IDP (SAML). 
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Util.NamespaceDoc">
+            <summary>
+             This namespace contains the API that provides applications with the ability to interact
+             with the Bloomberg terminal by invoking terminal mnemonics, launching LP components,
+             roaming user specific data from terminal to terminal, et cetera.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Util.BlpEnv">
+            <summary>
+             Bloomberg environment variables.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.Security1">
+            <summary>
+             Gets the first loaded security, if any.
+            </summary>
+             <value>The string that indicates the first loaded security, if any.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.Security2">
+            <summary>
+              Gets the second loaded security, if any.
+            </summary>
+             <value>The string that indicates the second loaded security, if any.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.ApplicationName">
+            <summary>
+             Gets the name of the calling application.
+            </summary>
+             <value>The string that indicates the calling application's name.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.ApplicationDirectory">
+            <summary>
+             Gets the calling application's directory path.
+            </summary>
+             <value>The string that indicates the calling application's directory path.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.IsTerminalServicesEnvironment">
+            <summary>
+             Gets the value that indicates whether the application is being executed in the Terminal Services environment.
+            </summary>
+             <value><c>true</c> if the application is being executed in the Terminal Services environment; otherwise <c>false</c>.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.AppId">
+            <summary>
+            Gets the string that uniquely identifies the calling application
+            within Bloomberg infrastructure (usually a GUID).
+            </summary>
+            <value>The string that uniquely identifies the calling application within Bloomberg infrastructure.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.Arguments">
+            <summary>
+            Get array of arguments passed to the application during startup.
+            </summary>
+            <value>Application startup arguments.</value>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.WebProxyUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Util.BlpEnv.SmartClientEndpointUrl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.NamespaceDoc">
+            <summary>
+            This namespace allows AppPortal application to consume WCF service hosted 
+            by application provider over SSL tunnel. Single Sign On functionality provided 
+            through use of WS-Security protocol and SAML 2.0 assertions.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1">
+             <summary>
+             A factory that creates AppPortal specific channel to send messages to service endpoints.
+             </summary>
+             <typeparam name="TChannel">The type of channel produced by the channel factory.</typeparam>
+             <example>
+             Example below shows code for synchronous call to a WCF service using WS-Security protocol
+             to pass Bloomberg terminal user identity as SAML 2.0 assertion
+             <code>
+             var serviceUrl = new Uri("https://companyname.com/AppPortalTestWcfService.svc");
+            	var factory = new BlpChannelFactory&lt;IAppPortalTestWcfService&gt;(serviceUrl);
+            	var channel = factory.CreateChannel();
+             
+            	var res = channel.Echo("Hello WCF");
+             // Consume returned value ....
+             
+             factory.Close();
+             </code>
+             </example>
+             <example>
+             Example below shows code for asynchronous call to a WCF service.
+             <code>
+             var serviceUrl = new Uri(@"https://companyname.com/AppPortalTestWcfService.svc");
+            
+            	var factory = new BlpChannelFactory&lt;IAppPortalTestWcfService&gt;(serviceUrl);
+            	var channel = factory.CreateChannel();
+            	channel.BeginEcho("Hello WCF", ar =&gt;
+            	    {
+            			var res = channel.EndEcho(ar);
+                     // Consume returned value ....
+             
+                     factory.Close(); // if channel is not needed anymore
+            
+            		}, this);
+             </code>
+             </example>
+             <example>
+             The following code shows web service's contract
+             <code>
+            [ServiceContractAttribute(ConfigurationName = "AppPortalTestWcfServiceReference.IAppPortalTestWcfService")]
+            public interface IAppPortalTestWcfService
+            {
+            
+            	[OperationContractAttribute(
+            		Action = "http://tempuri.org/IAppPortalTestWcfService/Echo", 
+            		ReplyAction = "http://tempuri.org/IAppPortalTestWcfService/EchoResponse")]
+            	string Echo(string msg);
+            
+            	[OperationContractAttribute(
+            		AsyncPattern = true, 
+            		Action = "http://tempuri.org/IAppPortalTestWcfService/Echo", 
+            		ReplyAction = "http://tempuri.org/IAppPortalTestWcfService/EchoResponse")]
+            	IAsyncResult BeginEcho(string msg, AsyncCallback callback, object asyncState);
+            
+            	string EndEcho(IAsyncResult result);
+            }    
+             </code>
+             </example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1.#ctor(System.Uri,System.Boolean)">
+            <summary>
+            Initializes a new instance of the BlpChannelFactory&lt;TChannel&gt; class. 
+            </summary>
+            <param name="remoteAddress">Service URL</param>
+            <param name="useWsSecurity">instruct channel factory to generate SAML 2.0 assertion
+            containing users's identity and add assertion as security token to
+            SOAP WS-Security header</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="remoteAddress"/> is <b>null</b>.</exception>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1.#ctor(System.Uri,System.Boolean,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Net.Security.RemoteCertificateValidationCallback,System.String)">
+            <summary>
+            Initializes a new instance of the BlpChannelFactory&lt;TChannel&gt; class. 
+            </summary>
+            <param name="remoteAddress">Service URL</param>
+            <param name="useWsSecurity">instruct channel factory to generate SAML 2.0 assertion
+            containing users's identity and add assertion as security token to
+            SOAP WS-Security header</param>
+            <param name="openTimeout">  A TimeSpan value that specifies the interval of time provided for an open operation to complete. 
+            This value should be greater than or equal to Zero. The default is 00:10:00.
+             </param>
+            <param name="receiveTimeout">A TimeSpan value that specifies the interval of time provided for a receive operation to complete. 
+            This value should be greater than or equal to Zero. The default is 00:05:00.
+             </param>
+            <param name="sendTimeout"> A TimeSpan value that specifies the interval of time provided for a send operation to complete. 
+            This value should be greater than or equal to Zero. The default is 00:05:00.
+             </param>
+            <param name="certificateVlaidationCallback"> 
+            Verifies the remote Secure Sockets Layer (SSL) certificate used for authentication.
+            </param>
+            <param name="sessionCookie">Session cookie, if received separately from Assertion Consumer Service</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="remoteAddress"/> is <b>null</b>.</exception>
+            <remarks>
+            The delegate's <i>sslPolicyErrors</i> argument contains any certificate errors returned by SSPI while 
+            authenticating the client or server. The Boolean value returned by the method invoked by this 
+            delegate determines whether the authentication is allowed to succeed.
+            </remarks>
+            <example>
+            The following code example implements a method that is invoked by an instance of the 
+            <b>RemoteCertificateValidationCallback</b> class. If there are validation errors, 
+            this method displays them and returns <b>false</b>, which prevents 
+            communication with the unauthenticated server.
+            <code>
+            // The following method is invoked by the RemoteCertificateValidationDelegate.
+            public static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+               if (sslPolicyErrors == SslPolicyErrors.None)
+                    return true;
+            
+                Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
+            
+                // Do not allow this client to communicate with unauthenticated servers.
+                return false;
+            }        
+            </code>
+            
+            </example>        
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1.#ctor(System.Uri,Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the BlpChannelFactory&lt;TChannel&gt; class. 
+            </summary>
+            <param name="remoteAddress">Service URL</param>
+            <param name="binding">AppPortal specific binding</param>
+            <param name="sessionCookie">Session cookie, if received separately from Assertion Consumer Service</param>
+            <param name="automaticDecompression">Enable auto negotiation of compressed content. </param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="remoteAddress"/>
+            or <paramref name="binding"/> is <b>null.</b></exception>
+            <example>
+            Code bellow illustrates a channel factory creation using the BlpTunnelBinding binding.
+            <code>
+            var binding = new BlpTunnelBinding(true, (o, certificate, chain, errors) =&gt; true)
+              {
+                   OpenTimeout = new TimeSpan(0, 0, 5),
+                   SendTimeout = new TimeSpan(0, 0, 5),
+                   ReceiveTimeout = new TimeSpan(0, 0, 5),
+                   CloseTimeout = new TimeSpan(0, 0, 5),
+                   MaxReceivedMessageSize = 5000
+               };
+            factory = new BlpChannelFactory&lt;IAppPortalTestWcfService&gt;(serviceUrl,binding);
+            </code>
+            </example>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1.CreateChannel">
+            <summary>
+            Creates the channel.
+            </summary>
+            <returns>The TChannel of type IChannel created by the factory.</returns>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpChannelFactory`1.TraceLevel">
+            <summary>
+            Trace level for WCF operations.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.#ctor(Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tokenType"></param>
+            <param name="issuer"></param>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType.Saml2Assertion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType.Saml2Response">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType.ProofToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Bloomberglp.AppPortal.Netapi.Wcf.BlpTokenParameters.TokenType.Other">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding">
+            <summary>
+            AppPortal specific binding.
+            </summary>
+            <remarks>
+            Constructs AppPortal specific channel stack. 
+            </remarks>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding.#ctor(System.Boolean,System.Net.Security.RemoteCertificateValidationCallback)">
+            <summary>
+            Initializes a new instance of the BlpTunnelBinding class. 
+            </summary>
+            <param name="useWsSecurity">Instruct channel factory to generate SAML 2.0 assertion
+            containing users's identity and add assertion as security token to
+            SOAP WS-Security header.</param>
+            <param name="certificateVlaidationCallback"> 
+            Verifies the remote Secure Sockets Layer (SSL) certificate used for authentication.
+            </param>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding.MaxReceivedMessageSize">
+            <summary>
+            Gets and sets the maximum allowable message size that can be received.
+            </summary>
+            <value>
+            The maximum allowable message size that can be received. The default is 65,536 bytes.
+            Maximum size is 1M.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding.KeepAliveEnabled">
+            <summary>
+            Gets or sets a value that indicates whether to make a persistent 
+            connection to a service endpoint. 
+            </summary>
+            <value>true if the request to the service endpoint should contain a Connection HTTP 
+            header with the value Keep-alive; otherwise, false. 
+            The default is true.
+            </value>
+            <remarks>
+            Set this property to true to send a Connection HTTP header with the value Keep-alive. 
+            A client uses this property to indicate a preference for persistent connections. 
+            When this property is true, the connection that the client makes to a service endpoint is 
+            persistent if the service endpoint supports that.
+            </remarks>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding.UseWsSecurity">
+            <summary>
+            If set to true then channel factory generates SAML 2.0 assertion
+            containing users's identity and adds this assertion as security token to
+            SOAP WS-Security headers.
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpTunnelBinding.ReaderQuotas">
+            <summary>
+            Gets or sets constraints on the complexity of SOAP messages that can be processed by endpoints configured with this binding.
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.BlpWcfExceptionHandler">
+            <summary>
+            Provides event(s) for handling of exception that occur within the Windows Communication Foundation (WCF) runtime.
+            </summary>
+        </member>
+        <member name="E:Bloomberglp.AppPortal.Netapi.Wcf.BlpWcfExceptionHandler.AsynchronousThreadExceptionEvent">
+            <summary>
+            Fired when WCF throws an exception during asynchronous (BeginXXX) call.
+            </summary>
+        </member>
+        <member name="E:Bloomberglp.AppPortal.Netapi.Wcf.BlpWcfExceptionHandler.TransportExceptionEvent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.CopyTo(Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas)">
+            <summary>
+            
+            </summary>
+            <param name="quotas"></param>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.CopyFrom(Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas)">
+            <summary>
+            
+            </summary>
+            <param name="quotas"></param>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.MaxArrayLength">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.MaxBytesPerRead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.MaxDepth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.MaxNameTableCharCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Bloomberglp.AppPortal.Netapi.Wcf.BlpXmlDictionaryReaderQuotas.MaxStringContentLength">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Bloomberglp.AppPortal.Netapi.Wcf.Channels.ServiceConnectorBinding">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Bloomberglp.AppPortal.Netapi.Wcf.Channels.ServiceConnectorBinding.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

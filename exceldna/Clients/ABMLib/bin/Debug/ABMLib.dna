@@ -1,0 +1,15 @@
+﻿<DnaLibrary RuntimeVersion="v4.0" >
+  <ExternalLibrary Path="ABMLib.dll" Pack="true"/>
+  <Reference Path="ABM.Model.dll" Pack="true"/>
+  <Reference Path="ABM.Functions.dll" Pack="true"/>
+  <Reference Path="ABM.Data.Services.dll" Pack="true"/>
+  <Reference Path="ABM.Common.ExcelDna.dll" Pack="true"/>
+  <Reference Path="ABM.Common.dll" Pack="true"/>
+  <Reference Path="ABM.Analytics.dll" Pack="true"/>
+  <Reference Path="Microsoft.Practices.Unity.dll" Pack="true"/>
+  <Reference Path="Microsoft.Practices.Unity.Configuration.dll" Pack="true"/>  
+  <Reference Path="Microsoft.Practices.ServiceLocation.dll" Pack="true"/>  
+  <Reference Path="MathNet.Numerics.dll" Pack="true"/>  
+  <Reference Path="log4net.dll" Pack="true"/>  
+  <Reference Path="ExcelDna.Integration.dll" Pack="true"/>    
+</DnaLibrary>

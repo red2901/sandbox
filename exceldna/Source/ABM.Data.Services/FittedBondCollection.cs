@@ -808,49 +808,14 @@ namespace ABM.Data.Services
             return result;
         }
 
-        /// <summary>
-        ///     The model clean price.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="double[]" />.
-        /// </returns>
         public IList<double> ModelCleanPrice()
         {
-            var result = new List<double>(this.bondCollection.Count);
-
-            foreach (Bond bond in this.bondCollection)
-            {
-                result.Add(bond.ModelCleanPriceMid);
-            }
-
-            return result;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// The model clean price.
-        /// </summary>
-        /// <param name="ticker">
-        /// The ticker.
-        /// </param>
-        /// <returns>
-        /// The <see cref="double"/>.
-        /// </returns>
         public double ModelCleanPrice(string ticker)
         {
-            double result = 0.0;
-
-            lock (this.collectionlock)
-            {
-                foreach (Bond bond in this.bondCollection)
-                {
-                    if (bond.RequestKey.Equals(ticker))
-                    {
-                        result = bond.ModelCleanPriceMid;
-                    }
-                }
-            }
-
-            return result;
+            throw new NotImplementedException();
         }
 
         /// <summary>

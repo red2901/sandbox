@@ -1,0 +1,1 @@
+C:\dev\src\sandbox\exceldna\Source\ABM.Data.Services.Bloomberg\obj\Debug Client Profile\ABM.Data.Services.Bloomberg.csprojResolveAssemblyReference.cache

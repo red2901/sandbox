@@ -1,0 +1,4 @@
+C:\dev\src\sandbox\exceldna\Source\ABM.Common.Bloomberg\bin\Debug\ABM.Common.Bloomberg.dll
+C:\dev\src\sandbox\exceldna\Source\ABM.Common.Bloomberg\bin\Debug\ABM.Common.Bloomberg.pdb
+C:\dev\src\sandbox\exceldna\Source\ABM.Common.Bloomberg\obj\Debug\ABM.Common.Bloomberg.dll
+C:\dev\src\sandbox\exceldna\Source\ABM.Common.Bloomberg\obj\Debug\ABM.Common.Bloomberg.pdb

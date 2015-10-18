@@ -23,7 +23,6 @@ namespace ABM.Functions
     using ABM.Common;
     using ABM.Common.Unity;
     using ABM.Data.Services;
-    using ABM.Data.Services.Bloomberg;
     using ABM.Model;
 
     /// <summary>
@@ -48,8 +47,8 @@ namespace ABM.Functions
         public static void Close()
         {
             // stop bloomberg
-            var bloombergService = ServiceLocator.Current.GetInstance<IBloombergService>();
-            bloombergService.Stop();
+//            var bloombergService = ServiceLocator.Current.GetInstance<IBloombergService>();
+//            bloombergService.Stop();
         }
 
         /// <summary>
@@ -94,16 +93,16 @@ namespace ABM.Functions
             UnityContainer.RegisterType<ISolver, LevenbergMarquardt>(new TransientLifetimeManager());
 
             // ok register services
-            UnityContainer.RegisterType<IBloombergService, BloombergService>(new ContainerControlledLifetimeManager());
-            UnityContainer.RegisterType<IInstrumentFactory, BloombergInstrumentFactory>(new ContainerControlledLifetimeManager());
+//            UnityContainer.RegisterType<IBloombergService, BloombergService>(new ContainerControlledLifetimeManager());
+//            UnityContainer.RegisterType<IInstrumentFactory, BloombergInstrumentFactory>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IObjectManagerService, ObjectManagerService>(
                 new ContainerControlledLifetimeManager());
 
             // start bloomberg
             try
             {
-                var bloombergService = ServiceLocator.Current.GetInstance<IBloombergService>();
-                bloombergService.Start();
+//                var bloombergService = ServiceLocator.Current.GetInstance<IBloombergService>();
+//                bloombergService.Start();
             }
             catch (Exception e)
             {
