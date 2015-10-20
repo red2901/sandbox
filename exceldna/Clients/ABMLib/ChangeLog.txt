@@ -1,0 +1,9 @@
+﻿2015-10-18 - Base compilation of refactored library
+2015-10-19 - Added ADM.Data.Services.UnitTests and put in fixes and tests for ManagedObject, ManagedObjectRepositoryService (replacement of ObjectManagerService)
+
+Logging via attributes
+Initial compile against C++ library
+Initial date library
+Included ExcelDNA to main projects
+Extended ExcelDNA to include python code
+Added direct reference to code files, not via the embedded XML tags (hard to code clean code against)
