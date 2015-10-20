@@ -92,9 +92,9 @@
     <Compile Include="FittedBondCollection.cs" />
     <Compile Include="IFittedBondCollection.cs" />
     <Compile Include="IInstrumentFactory.cs" />
-    <Compile Include="IObjectManagerService.cs" />
+    <Compile Include="IManagedObjectRepositoryService.cs" />
     <Compile Include="ManagedObject.cs" />
-    <Compile Include="ObjectManagerService.cs" />
+    <Compile Include="ManagedObjectRepositoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABM.Common.Bloomberg", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABM.Data.Services.Bloomberg", "..\..\Source\ABM.Data.Services.Bloomberg\ABM.Data.Services.Bloomberg.csproj", "{BBD4D13A-1142-418C-B8F5-F2903763B87A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADM.Data.Services.UnitTests", "..\..\Source\ADM.Data.Services.UnitTests\ADM.Data.Services.UnitTests.csproj", "{365E8AD3-00CF-4216-A745-406B9B16E676}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Client Profile|Any CPU = Debug Client Profile|Any CPU
@@ -132,6 +134,16 @@ Global
 		{BBD4D13A-1142-418C-B8F5-F2903763B87A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBD4D13A-1142-418C-B8F5-F2903763B87A}.Release-Signed|Any CPU.ActiveCfg = Release|Any CPU
 		{BBD4D13A-1142-418C-B8F5-F2903763B87A}.Release-Signed|Any CPU.Build.0 = Release|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug Client Profile|Any CPU.ActiveCfg = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug Client Profile|Any CPU.Build.0 = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug64|Any CPU.ActiveCfg = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Debug64|Any CPU.Build.0 = Debug|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Release-Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{365E8AD3-00CF-4216-A745-406B9B16E676}.Release-Signed|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
