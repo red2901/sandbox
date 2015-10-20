@@ -92,7 +92,7 @@ namespace ABM.Functions
             }
             else
             {
-                var bond = (Bond)mo.Object;
+                var bond = (Bond)mo.RawObject;
 
                 bool haschanged = false;
                 if (calculateYields && bond.YieldInputsChanged)
@@ -169,7 +169,7 @@ namespace ABM.Functions
                         });
             }
 
-            var bondRregressionCoeffs = (BondRegressionCoefficients)mo.Object;
+            var bondRregressionCoeffs = (BondRegressionCoefficients)mo.RawObject;
             if (bondRregressionCoeffs.Update(
                 amountOutstandingVar, 
                 benchmarkVar, 
@@ -221,7 +221,7 @@ namespace ABM.Functions
                 return ObjectManager.ABMObjectManagerCreate(curveName, discountCurveObject);
             }
 
-            var discountCurve = (IYieldCurve)mo.Object;
+            var discountCurve = (IYieldCurve)mo.RawObject;
 
             if (discountCurve.Update(curveDateList, discountFactorList))
             {
@@ -358,7 +358,7 @@ namespace ABM.Functions
                 return ObjectManager.ABMObjectManagerCreate(collectionName, bondCollection);
             }
 
-            var backgroundBondCollection = (Data.Services.FittedBondCollection)mo.Object;
+            var backgroundBondCollection = (Data.Services.FittedBondCollection)mo.RawObject;
 
             try
             {
@@ -422,7 +422,7 @@ namespace ABM.Functions
                 return ObjectManager.ABMObjectManagerCreate(curveName, newYieldCurve);
             }
 
-            var yieldCurve = (YieldCurve)mo.Object;
+            var yieldCurve = (YieldCurve)mo.RawObject;
             if (yieldCurve.Update(curveDateList, yieldList))
             {
                 mo.UpdateVersion();

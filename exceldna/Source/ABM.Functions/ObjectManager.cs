@@ -26,7 +26,7 @@ namespace ABM.Functions
         /// </summary>
         public static void ABMObjectManagerClear()
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
             objectManagerService.Clear();
         }
 
@@ -38,7 +38,7 @@ namespace ABM.Functions
         /// </returns>
         public static object ABMObjectManagerCount()
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
             return objectManagerService.Count;
         }
 
@@ -56,9 +56,9 @@ namespace ABM.Functions
         /// </returns>
         public static string ABMObjectManagerCreate(string key, object data)
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
 
-            ManagedObject managedObject = objectManagerService.Store(key, data);
+            ManagedObject managedObject = objectManagerService.Add(key, data);
             return managedObject.ToString();
         }
 
@@ -70,7 +70,7 @@ namespace ABM.Functions
         /// </returns>
         public static IList<string> ABMObjectManagerList()
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
             return objectManagerService.KeyList();
         }
 
@@ -85,7 +85,7 @@ namespace ABM.Functions
         /// </returns>
         public static object ABMObjectManagerRetrieve(string key)
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
             return objectManagerService.RetrieveUsingRef(key);
         }
 
@@ -100,7 +100,7 @@ namespace ABM.Functions
         /// </returns>
         public static object ABMObjectManagerRetrieveManagedObject(string ticker)
         {
-            var objectManagerService = ServiceLocator.Current.GetInstance<IObjectManagerService>();
+            var objectManagerService = ServiceLocator.Current.GetInstance<IManagedObjectRepositoryService>();
             return objectManagerService.RetrieveManagedObject(ticker);
         }
 

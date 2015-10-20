@@ -95,7 +95,7 @@ namespace ABM.Functions
             // ok register services
 //            UnityContainer.RegisterType<IBloombergService, BloombergService>(new ContainerControlledLifetimeManager());
 //            UnityContainer.RegisterType<IInstrumentFactory, BloombergInstrumentFactory>(new ContainerControlledLifetimeManager());
-            UnityContainer.RegisterType<IObjectManagerService, ObjectManagerService>(
+            UnityContainer.RegisterType<IManagedObjectRepositoryService, ManagedObjectRepositoryService>(
                 new ContainerControlledLifetimeManager());
 
             // start bloomberg

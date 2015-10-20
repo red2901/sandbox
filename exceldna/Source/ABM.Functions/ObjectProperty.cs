@@ -39,7 +39,7 @@ namespace ABM.Functions
                 return null;
             }
 
-            object o = mo.Object;
+            object o = mo.RawObject;
             var plist = new List<string>();
             foreach (PropertyInfo prop in o.GetType().GetProperties())
             {
@@ -70,7 +70,7 @@ namespace ABM.Functions
                 return null;
             }
 
-            object o = mo.Object;
+            object o = mo.RawObject;
             foreach (PropertyInfo prop in o.GetType().GetProperties())
             {
                 if (prop.Name.Equals(property))
