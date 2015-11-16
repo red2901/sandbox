@@ -2,7 +2,7 @@
 # some pre-requisites
 enable_testing()
 set(MODULE_NAME boost_hello_world)
-project( ${MODEUL_NAME}_py )
+project( ${MODULE_NAME}_py )
 
 cmake_minimum_required( VERSION 2.8 )
 set(CMAKE_VERBOSE_MAKEFILE 1)
@@ -15,7 +15,8 @@ message(STATUS "${CMAKE_BUILD_TYPE}")
 set(PYTHON_ROOT           "c:/Anaconda2")
 set(PYTHON_EXECUTABLE     "${PYTHON_ROOT}/python.exe")              
 set(PYTHON_LIBRARY        "${PYTHON_ROOT}/libs/python27.lib")              
-set(PYTHON_INCLUDE_DIR    "${PYTHON_ROOT}/include")                        
+set(PYTHON_INCLUDE_DIR    "${PYTHON_ROOT}/include")
+# boost setup
 set(BOOST_INCLUDEDIR      "c:/local/boost_1_59_0")
 set(BOOST_LIBRARYDIR      "c:/local/boost_1_59_0/lib64-msvc-12.0")
 
