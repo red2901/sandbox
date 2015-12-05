@@ -42,3 +42,7 @@ Thumbs.db
 ##############
 *.elc
 *~
+/cmake_qt/build_msvc
+/cython/build
+/cython/dist
+/cppstrings/build_nja
