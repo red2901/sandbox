@@ -1,4 +1,0 @@
-C:/dev/src/sandbox/boost_python/lib/boost_hello_world.pyd
-C:/dev/src/sandbox/boost_python/lib/boost_python-vc120-mt-1_59.dll
-C:/dev/src/sandbox/boost_python/lib/boost_python-vc120-mt-gd-1_59.dll
-C:/dev/src/sandbox/boost_python/lib/hello.py

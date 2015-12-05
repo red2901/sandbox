@@ -12,13 +12,13 @@ set(CMAKE_BUILD_TYPE "Release")
 message(STATUS "${CMAKE_BUILD_TYPE}")
 
 # python setup
-set(PYTHON_ROOT           "c:/Anaconda2")
+set(PYTHON_ROOT           "c:/Anaconda2x32")
 set(PYTHON_EXECUTABLE     "${PYTHON_ROOT}/python.exe")              
 set(PYTHON_LIBRARY        "${PYTHON_ROOT}/libs/python27.lib")              
 set(PYTHON_INCLUDE_DIR    "${PYTHON_ROOT}/include")
 # boost setup
-set(BOOST_INCLUDEDIR      "c:/local/boost_1_59_0")
-set(BOOST_LIBRARYDIR      "c:/local/boost_1_59_0/lib64-msvc-12.0")
+set(BOOST_INCLUDEDIR      "c:/lib/boost_1_59_0")
+set(BOOST_LIBRARYDIR      "c:/lib/boost_1_59_0/lib32-msvc-12.0")
 
 # Find necessary packages
 find_package( PythonLibs 2.7 REQUIRED )
@@ -40,10 +40,11 @@ elseif(NOT Boost_FOUND)
 endif()
   
 message(STATUS "Boost  ${BOOST_PYTHON}")
+message(STATUS "Boost  ${Boost_LIBRARIES}")
 message(STATUS "Python ${PYTHON_LIBRARIES}")
 message(STATUS "Python ${PYTHON_EXECUTABLE}")
 
-add_library(${MODULE_NAME} MODULE
+add_library(${MODULE_NAME} SHARED
   hello.cpp
   )
 
