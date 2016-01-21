@@ -1,0 +1,5 @@
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS9\x64_Debug\Template.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS9\x64_Debug\Template.NET.pdb
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS9\Addin\obj\x64\Debug\ResolveAssemblyReference.cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS9\Addin\obj\x64\Debug\Template.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS9\Addin\obj\x64\Debug\Template.NET.pdb

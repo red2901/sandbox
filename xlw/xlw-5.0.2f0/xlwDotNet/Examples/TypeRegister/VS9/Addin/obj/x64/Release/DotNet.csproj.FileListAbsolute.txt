@@ -1,0 +1,5 @@
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\TypeRegister\VS9\x64_Release\TypeRegDemo.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\TypeRegister\VS9\x64_Release\TypeRegDemo.NET.pdb
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\TypeRegister\VS9\Addin\obj\x64\Release\ResolveAssemblyReference.cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\TypeRegister\VS9\Addin\obj\x64\Release\TypeRegDemo.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\TypeRegister\VS9\Addin\obj\x64\Release\TypeRegDemo.NET.pdb

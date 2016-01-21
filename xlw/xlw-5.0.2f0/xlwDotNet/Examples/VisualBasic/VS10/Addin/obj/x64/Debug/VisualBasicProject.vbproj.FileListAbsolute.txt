@@ -1,0 +1,7 @@
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\x64_Debug\Template.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\x64_Debug\Template.NET.pdb
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\Addin\obj\x64\Debug\VisualBasicProject.vbprojResolveAssemblyReference.cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\Addin\obj\x64\Debug\Template.Resources.resources
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\Addin\obj\x64\Debug\VisualBasicProject.vbproj.GenerateResource.Cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\Addin\obj\x64\Debug\Template.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\VisualBasic\VS10\Addin\obj\x64\Debug\Template.NET.pdb

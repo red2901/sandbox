@@ -1,0 +1,5 @@
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\Start Here - Example\VS10\Release\Example.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\Start Here - Example\VS10\Release\Example.NET.pdb
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\Start Here - Example\VS10\Addin\obj\x86\Release\DotNet.csprojResolveAssemblyReference.cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\Start Here - Example\VS10\Addin\obj\x86\Release\Example.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\Start Here - Example\VS10\Addin\obj\x86\Release\Example.NET.pdb

@@ -1,0 +1,5 @@
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\ReflectionFactory\VS10\Debug\ReflectionFactory.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\ReflectionFactory\VS10\Debug\ReflectionFactory.NET.pdb
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\ReflectionFactory\VS10\Addin\obj\x86\Debug\DotNet.csprojResolveAssemblyReference.cache
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\ReflectionFactory\VS10\Addin\obj\x86\Debug\ReflectionFactory.NET.dll
+c:\Hudson\workspace\xlw\xlw\xlwDotNet\Examples\ReflectionFactory\VS10\Addin\obj\x86\Debug\ReflectionFactory.NET.pdb
